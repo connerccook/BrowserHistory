@@ -40,7 +40,7 @@ void BrowserHistory::visitSite(string url, size_t filesize){
   url_ = url;
   filesize_= filesize;
   BrowserHistory visited = {url_,filesize_};
-  mylist.emplace_back(visit); //back of the node is the most recent visit
+  mylist.emplace_back(visited); //back of the node is the most recent visit
   if (it->url_== "") { //if browserHistory was empty, pop the "empty" node
     mylist.pop_front();
     it = mylist.begin();
@@ -73,5 +73,23 @@ void BrowserHistory::readFile(string fileName) {
   ifstream fin(fileName);
   string Url, function;
   size_t fileSize;
-  
+  while (fin>>function>>Url>>fileSize) {
+    if (function == "visit") {
+      mylist.visitSite(Url,fileSize);
+    } else if (function == "back") {
+      mylist.backButton();
+    } else if (function == "forward") {
+      mylist.forwardButton();
+    }
+  }
+}
+
+size_t BrowserHistory::currentPageSize() {
+  size_t pageSize = it -> filesize_;
+  return pageSize;
+}
+
+size_t BrowserHistory::getHistoryLength() {
+  size_t length = mylist.size();
+  return length;
 }
