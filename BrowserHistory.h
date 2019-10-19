@@ -24,12 +24,12 @@ public:
 
 private:
   // TO BE COMPLETED
-
+list<BrowserHistory> mylist;
   string url_;
   size_t filesize_;
 
 };
-list<BrowserHistory> mylist;
+
 list<BrowserHistory>::iterator it = mylist.begin();
 //list<BrowserHistory>::iterator it2 = prev(mylist.end());
 BrowserHistory::BrowserHistory() {
@@ -47,10 +47,10 @@ void BrowserHistory::visitSite(string url, size_t filesize){
   it++; //iterator points to recent node
 
 //list<BrowserHistory>::iterator it2 = mylist.back(); //secondary iterator to delete history
- while (it!=prev(mylist.end())) { //if the main iterator is not in the back of the list, pop every node after
-   mylist.pop_back();
+// while (it!=prev(mylist.end())) { //if the main iterator is not in the back of the list, pop every node after
+  // mylist.pop_back();
    //it2 = prev(mylist.end());
- }
+ //}
 }
 
 void BrowserHistory::backButton() {
