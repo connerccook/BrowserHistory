@@ -11,7 +11,7 @@ using namespace std;
 class BrowserHistory {
 public:
     BrowserHistory();
-
+    BrowserHistory(string url, size_t filesize);
     void visitSite(string url, size_t filesize);
     void backButton();
     void forwardButton();
@@ -29,30 +29,30 @@ private:
   size_t filesize_;
 
 };
-
+list<BrowserHistory> mylist;
+list<BrowserHistory>::iterator it = mylist.begin();
+//list<BrowserHistory>::iterator it2 = prev(mylist.end());
 BrowserHistory::BrowserHistory() {
   url_ = "";
   filesize_= 0;
-  list<BrowserHistory> mylist = {url_,filesize_};
-  list<BrowserHistory>::iterator it = mylist.begin(); //main iterator
+  //list<BrowserHistory> mylist;
+  //list<BrowserHistory>::iterator it = mylist.begin(); //main iterator
 }
+BrowserHistory::BrowserHistory(string url, size_t filesize) : url_(url), filesize_(filesize){}
 void BrowserHistory::visitSite(string url, size_t filesize){
-  url_ = url;
-  filesize_= filesize;
-  BrowserHistory visited = {url_,filesize_};
-  mylist.emplace_back(visited); //back of the node is the most recent visit
-  if (it->url_== "") { //if browserHistory was empty, pop the "empty" node
-    mylist.pop_front();
-    it = mylist.begin();
-  } else {
+  BrowserHistory a;
+  a.url_ = url;
+  a.filesize_= filesize;
+  mylist.push_back(a); //back of the node is the most recent visit
   it++; //iterator points to recent node
-}
-list<BrowserHistory>::iterator it2 = mylist.back(); //secondary iterator to delete history
- while (it2!=it) { //if the main iterator is not in the back of the list, pop every node after
-   pop_back();
-   it2 = mylist.back();
+
+//list<BrowserHistory>::iterator it2 = mylist.back(); //secondary iterator to delete history
+ while (it!=prev(mylist.end())) { //if the main iterator is not in the back of the list, pop every node after
+   mylist.pop_back();
+   //it2 = prev(mylist.end());
  }
 }
+
 void BrowserHistory::backButton() {
 if (it == mylist.begin()){} // if the iterator is at the beginning of the list, no change
   else {
@@ -74,12 +74,13 @@ void BrowserHistory::readFile(string fileName) {
   string Url, function;
   size_t fileSize;
   while (fin>>function>>Url>>fileSize) {
+    BrowserHistory b;
     if (function == "visit") {
-      mylist.visitSite(Url,fileSize);
+      b.visitSite(Url,fileSize);
     } else if (function == "back") {
-      mylist.backButton();
+      b.backButton();
     } else if (function == "forward") {
-      mylist.forwardButton();
+      b.forwardButton();
     }
   }
 }
