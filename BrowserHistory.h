@@ -51,6 +51,7 @@ while (it!=it2) { //if the main iterator is not in the back of the list, pop eve
   mylist.pop_back();
   it2 = prev(mylist.end());
  }
+
 }
 
 void BrowserHistory::backButton() {
@@ -73,14 +74,14 @@ void BrowserHistory::readFile(string fileName) {
   ifstream fin(fileName);
   string Url, function;
   size_t fileSize;
-  BrowserHistory b;
+
   while (fin>>function>>Url>>fileSize) {
     if (function == "visit") {
-      b.visitSite(Url,fileSize);
+      visitSite(Url,fileSize);
     } else if (function == "back") {
-      b.backButton();
+      backButton();
     } else if (function == "forward") {
-      b.forwardButton();
+      forwardButton();
     }
   }
 }
