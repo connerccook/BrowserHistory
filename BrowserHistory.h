@@ -47,11 +47,10 @@ void BrowserHistory::visitSite(string url, size_t filesize){
   mylist.push_back(a); //back of the node is the most recent visit
   it++; //iterator points to recent node
   it2++;
-while (it!=it2) { //if the main iterator is not in the back of the list, pop every node after
+while (it!=prev(mylist.end())) { //if the main iterator is not in the back of the list, pop every node after
   mylist.pop_back();
   it2 = prev(mylist.end());
- }
-
+}
 }
 
 void BrowserHistory::backButton() {
@@ -74,8 +73,18 @@ void BrowserHistory::readFile(string fileName) {
   ifstream fin(fileName);
   string Url, function;
   size_t fileSize;
+  while (fin >> function) {
+    if (function == "visit") {
+      fin >> Url >> fileSize;
+      visitSite(Url,fileSize);
+    } else if (function == "back") {
+      backButton();
+    } else if (function == "forward") {
+      forwardButton();
+    }
 
-  while (fin>>function>>Url>>fileSize) {
+  }
+  /*while (fin>>function>>Url>>fileSize) {
     if (function == "visit") {
       visitSite(Url,fileSize);
     } else if (function == "back") {
@@ -83,7 +92,7 @@ void BrowserHistory::readFile(string fileName) {
     } else if (function == "forward") {
       forwardButton();
     }
-  }
+  } */
 }
 
 size_t BrowserHistory::currentPageSize() {
