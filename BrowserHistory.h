@@ -43,14 +43,14 @@ BrowserHistory::BrowserHistory() {
 }
 BrowserHistory::BrowserHistory(string url, size_t filesize) : url_(url), filesize_(filesize){}
 void BrowserHistory::visitSite(string url, size_t filesize){
+  while (it!=it2){
+    mylist.pop_back();
+    it2 = prev(mylist.end());
+  }
   BrowserHistory a = {url, filesize};
   mylist.push_back(a); //back of the node is the most recent visit
   it++; //iterator points to recent node
   it2++;
-while (it!=it2) { //if the main iterator is not in the back of the list, pop every node after
-  mylist.pop_back();
-  it2 = prev(mylist.end());
-}
 }
 
 void BrowserHistory::backButton() {
