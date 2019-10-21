@@ -47,7 +47,7 @@ void BrowserHistory::visitSite(string url, size_t filesize){
   mylist.push_back(a); //back of the node is the most recent visit
   it++; //iterator points to recent node
   it2++;
-while (it!=prev(mylist.end())) { //if the main iterator is not in the back of the list, pop every node after
+while (it!=it2) { //if the main iterator is not in the back of the list, pop every node after
   mylist.pop_back();
   it2 = prev(mylist.end());
 }
